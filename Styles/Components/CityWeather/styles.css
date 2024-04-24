@@ -15,7 +15,12 @@
 
     .Status {
         justify-content: space-around;
-        height: 13.4375rem;
+        flex-direction: column;
+
+        @media (min-width: 768px) {
+            height: 13.4375rem;
+            flex-direction: row;
+        }
     }
 }
 
