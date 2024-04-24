@@ -12,6 +12,11 @@
         padding-bottom: 2rem;
         text-align: center;
     }
+
+    .Status {
+        justify-content: space-around;
+        height: 13.4375rem;
+    }
 }
 
 .LeftSide {
@@ -19,6 +24,31 @@
 
     img {
         align-self: baseline;
+    }
+}
+
+.RightSide {
+    padding-top: 1.8rem;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+
+    .Column {
+        gap: 0.25rem;
+
+        .Flex {
+            justify-content: center;
+            gap: 0.3rem;
+
+            p {
+                align-self: center;
+            }
+        }
+
+        img {
+            height: fit-content;
+            align-self: center;
+        }
     }
 }
 
