@@ -24,30 +24,31 @@
     </header>
     <div class="Content">
         <section class="CityWeather">
-            <h2>
+            <h2 id="timezone">
                 Fortaleza, Ceará
             </h2>
+            <button id="PressHere">Generate Tip</button>
             <div class="Flex Status">
                 <section class="Flex LeftSide">
                     <img src="./SolChuvaImgs/Cloud.svg" alt="Ícone Tempo Atual">
                     <section class="Flex Dados First">
                         <section class="Temperature">
-                            <h3>26ºC</h3>
-                            <p>Parcialmente nublado</p>
+                            <h3 id="temperature">26ºC</h3>
+                            <p id="description">Parcialmente nublado</p>
                         </section>
                         <section class="Flex MaxAndMin">
                             <section class="MaxMin">
                                 <p>Máxima</p>
                                 <section class="Flex Text">
                                     <img src="./SolChuvaImgs/tempMax.svg" alt="Ícone temperatura Máxima">
-                                    <p>30ºC</p>
+                                    <p id="tempmax">30ºC</p>
                                 </section>
                             </section>
                             <section class="MaxMin">
                                 <p>Mínima</p>
                                 <section class="Flex Text">
                                     <img src="./SolChuvaImgs/tempMin.svg" alt="Ícone temperatura Mínima">
-                                    <p>24ºC</p>
+                                    <p id="tempmin">24ºC</p>
                                 </section>
                             </section>
                         </section>
@@ -58,26 +59,28 @@
                         <p>Velocidade do vento</p>
                         <section class="Flex">
                             <img src="./SolChuvaImgs/wind.svg" alt="Ícone velocidade do vento">
-                            <p>12 km/h</p>
+                            <p id="windspeed">12 km/h</p>
                         </section>
                     </section>
                     <section class="Flex Term Column">
                         <p>Sensação Térmica</p>
                         <section class="Flex">
                             <img src="./SolChuvaImgs/Temp.svg" alt="Ícone Sensação Térmica">
-                            <p>32 ºC</p>
+                            <p id="feelslike">32 ºC</p>
                         </section>
                     </section>
                     <section class="Flex Speed Column">
                         <p>Umidade</p>
                         <section class="Flex">
                             <img src="./SolChuvaImgs/Humidity.svg" alt="Ícone umidade">
-                            <p>82%</p>
+                            <p id="humidity">82%</p>
                         </section>
                     </section>
                 </section>
             </div>
     </div>
 </body>
+
+<script src="./index.js"></script>
 
 </html>
