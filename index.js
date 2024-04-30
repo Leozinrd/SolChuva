@@ -19,12 +19,11 @@ function getUpdateComponents(id, value) {
     document.getElementById(id).innerText = value + unit;
 }
 
-function getWeather() {
-    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=-3.71&lon=-38.54&units=metric&lang=pt_br&appid=f3e92ada55e1ce50d221bc184ed88bfb`)
+function getWeather(lat, lon) {
+    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=f3e92ada55e1ce50d221bc184ed88bfb`)
         .then(response => response.json())
         .then(data => {
 
-            getUpdateComponents('timezone', data.timezone);
             getUpdateComponents('temperature', data.current.temp);
             getUpdateComponents('description', data.current.weather[0].description);
             getUpdateComponents('tempmax', data.daily[0].temp.max);
@@ -39,4 +38,25 @@ function getWeather() {
         .catch(error => console.log(error));
 }
 
-const weatherButton = document.getElementById('PressHere').addEventListener('click', getWeather);
+function getLatLong(city) {
+    fetch(`https://geocode.maps.co/search?q=${city}&api_key=6630683e00c08787426813fzr4f09d4`)
+        .then(response => response.json())
+        .then(data => {
+
+            const lat = data[0].lat;
+            const lon = data[0].lon;
+            console.log(data[0]);
+
+            const displayName = data[0].display_name.split(',')[0];
+            getUpdateComponents('city', displayName);
+
+            getWeather(lat, lon);
+        })
+        .catch(error => console.log(error));
+}
+
+const searchButton = document.querySelector('.SearchInput img');
+searchButton.addEventListener('click', () => {
+    const city = document.querySelector('.SearchInput input').value;
+    getLatLong(city);
+});
