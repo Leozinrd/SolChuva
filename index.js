@@ -1,36 +1,42 @@
-function getWeather () {
-    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=-3.71&lon=-38.54&units=metric&lang=pt_br&appid=8bd7f7f371168f5aaac42a9e77876f79`)
+const units = {
+    'temperature': `ºC`,
+    'windspeed': `km/h`,
+    'humidity': `%`
+}
+
+const temperatureIds = ['temperature', 'tempmax', 'tempmin', 'feelslike'];
+
+function getUpdateComponents(id, value) {
+    const unit = temperatureIds.includes(id) ? units['temperature'] : units[id] ? units[id] : '';
+
+    if (temperatureIds.includes(id)) {
+        value = Math.round(value);
+    }
+
+    if (id === 'description') {
+        value = value.charAt(0).toUpperCase() + value.slice(1);
+    }
+    document.getElementById(id).innerText = value + unit;
+}
+
+function getWeather() {
+    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=-3.71&lon=-38.54&units=metric&lang=pt_br&appid=f3e92ada55e1ce50d221bc184ed88bfb`)
         .then(response => response.json())
         .then(data => {
 
-            const timezone = document.getElementById('timezone')
-            timezone.innerText = data.timezone; 
+            getUpdateComponents('timezone', data.timezone);
+            getUpdateComponents('temperature', data.current.temp);
+            getUpdateComponents('description', data.current.weather[0].description);
+            getUpdateComponents('tempmax', data.daily[0].temp.max);
+            getUpdateComponents('tempmin', data.daily[0].temp.min);
+            getUpdateComponents('windspeed', data.current.wind_speed);
+            getUpdateComponents('feelslike', data.current.feels_like);
+            getUpdateComponents('humidity', data.current.humidity);
 
-            const temperature = document.getElementById('temperature')
-            temperature.innerText = data.current.temp;
-
-            const description = document.getElementById('description')
-            description.innerText = data.current.weather[0].description;
-
-            const tempmax = document.getElementById('tempmax')
-            tempmax.innerText = data.daily[0].temp.max;
-
-            const tempmin = document.getElementById('tempmin')
-            tempmin.innerText = data.daily[0].temp.min;
-
-            const windspeed = document.getElementById('windspeed')
-            windspeed.innerText = data.current.wind_speed;
-
-            const feelslike = document.getElementById('feelslike')
-            feelslike.innerText = data.current.feels_like;
-
-            const humidity = document.getElementById('humidity')
-            humidity.innerText = data.current.humidity;
-
-            console.log(data)
+            console.log(data);
         })
 
-        .catch(error => console.log(error))
+        .catch(error => console.log(error));
 }
 
 const weatherButton = document.getElementById('PressHere').addEventListener('click', getWeather);
