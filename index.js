@@ -55,8 +55,8 @@ function getLatLong(city) {
         .catch(error => console.log(error));
 }
 
-const searchButton = document.querySelector('.SearchInput img');
-searchButton.addEventListener('click', () => {
-    const city = document.querySelector('.SearchInput input').value;
+document.getElementById('searchForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Isso impede que a página seja recarregada
+    var city = document.querySelector('.SearchInput input[type="search"]').value;
     getLatLong(city);
 });
