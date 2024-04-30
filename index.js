@@ -60,3 +60,11 @@ document.getElementById('searchForm').addEventListener('submit', function (event
     var city = document.querySelector('.SearchInput input[type="search"]').value;
     getLatLong(city);
 });
+
+document.getElementById('searchInput').addEventListener('focus', function () {
+    document.getElementById('searchIcon').style.display = 'none'; // Esconde a imagem quando o input está focado
+});
+
+document.getElementById('searchInput').addEventListener('blur', function () {
+    document.getElementById('searchIcon').style.display = 'block'; // Mostra a imagem quando o input perde o foco
+});
