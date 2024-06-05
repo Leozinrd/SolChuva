@@ -1,3 +1,40 @@
+let isCelsius = true;
+
+function convertTemperature(value, toCelsius) {
+    if (toCelsius) {
+        return (value - 32) * 5 / 9; // Fahrenheit para Celsius
+    } else {
+        return (value * 9 / 5) + 32; // Celsius para Fahrenheit
+    }
+}
+
+function toggleTemperatureUnit() {
+    isCelsius = !isCelsius;
+
+    const temperatureElements = ['temperature', 'tempmax', 'tempmin', 'feelslike'];
+    temperatureElements.forEach(id => {
+        const element = document.getElementById(id);
+        const currentValue = parseFloat(element.innerText);
+        const newValue = convertTemperature(currentValue, isCelsius);
+        element.innerText = Math.round(newValue) + (isCelsius ? 'ºC' : 'ºF');
+    });
+
+    const forecastElements = document.querySelectorAll('.forecast-temp');
+    forecastElements.forEach(element => {
+        const currentValue = parseFloat(element.innerText);
+        const newValue = convertTemperature(currentValue, isCelsius);
+        element.innerText = Math.round(newValue) + (isCelsius ? 'ºC' : 'ºF');
+    });
+
+    const windspeedElement = document.getElementById('windspeed');
+    const currentWindspeed = parseFloat(windspeedElement.innerText);
+    if (isCelsius) {
+        windspeedElement.innerText = Math.round(currentWindspeed * 1.60934) + ' km/h'; // milhas/h para km/h
+    } else {
+        windspeedElement.innerText = Math.round(currentWindspeed / 1.60934) + ' mph'; // km/h para milhas/h
+    }
+}
+
 const units = {
     'temperature': `ºC`,
     'windspeed': `km/h`,
@@ -32,12 +69,45 @@ function getWeather(lat, lon) {
             getUpdateComponents('feelslike', data.current.feels_like);
             getUpdateComponents('humidity', data.current.humidity);
 
+            updateForecast(data.daily);
+
             console.log(data);
         })
 
         .catch(error => console.log(error));
 }
 
+function updateForecast(dailyForecast) {
+    const forecastContainer = document.getElementById('forecastContainer');
+    forecastContainer.innerHTML = '';
+
+    let displayedDays = 0; // Variável para controlar o número de dias exibidos
+
+    dailyForecast.forEach((day, index) => {
+        if (displayedDays >= 5) return; // Pára após 5 dias exibidos
+
+        if (index === 0) return; // Pula o primeiro dia, pois é o dia atual
+
+        const forecastElement = document.createElement('div');
+        forecastElement.classList.add('Forecast');
+
+        const date = new Date(day.dt * 1000);
+        const options = { weekday: 'short', day: 'numeric', month: 'numeric' };
+        const formattedDate = date.toLocaleDateString('pt-BR', options);
+
+        const tempMax = isCelsius ? Math.round(day.temp.max) : Math.round(convertTemperature(day.temp.max, false));
+        const tempMin = isCelsius ? Math.round(day.temp.min) : Math.round(convertTemperature(day.temp.min, false));
+
+        forecastElement.innerHTML = `
+            <p>${formattedDate}</p>
+            <p class="forecast-temp">${tempMax}${isCelsius ? 'ºC' : 'ºF'} / ${tempMin}${isCelsius ? 'ºC' : 'ºF'}</p>
+            <p>${day.weather[0].description}</p>
+        `;
+
+        forecastContainer.appendChild(forecastElement);
+        displayedDays++; // Incrementa o contador de dias exibidos
+    });
+}
 function getLatLong(city) {
     fetch(`https://geocode.maps.co/search?q=${city}&api_key=6630683e00c08787426813fzr4f09d4`)
         .then(response => response.json())
@@ -55,6 +125,8 @@ function getLatLong(city) {
         .catch(error => console.log(error));
 }
 
+document.getElementById('toggleUnit').addEventListener('click', toggleTemperatureUnit);
+
 document.getElementById('searchForm').addEventListener('submit', function (event) {
     event.preventDefault(); // Isso impede que a página seja recarregada
     var city = document.querySelector('.SearchInput input[type="search"]').value;
@@ -68,3 +140,6 @@ document.getElementById('searchInput').addEventListener('focus', function () {
 document.getElementById('searchInput').addEventListener('blur', function () {
     document.getElementById('searchIcon').style.display = 'block'; // Mostra a imagem quando o input perde o foco
 });
+
+
+getLatLong('Fortaleza')
