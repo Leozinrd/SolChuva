@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="./Styles/Components/Common/styles.css">
     <link rel="stylesheet" href="./Styles/Components/TopBar/styles.css">
     <link rel="stylesheet" href="./Styles/Components/CityWeather/styles.css">
+    <link rel="stylesheet" href="./Styles/Components/button/styles.css">
+    <link rel="stylesheet" href="./Styles/Components/weather-forecast/styles.css">
     <title>Sol e Chuva</title>
 </head>
 
 <body>
+    <link rel="import" href="./Styles/Components/button/button-switch.html">
+
     <header class="TopBar">
         <div class="Content">
             <section class="IconSearch">
@@ -29,6 +33,12 @@
             <h2 id="city">
                 Fortaleza, Ceará
             </h2>
+            <div class="btn-container" id="toggleUnit">
+                <label class="switch btn-color-mode-switch">
+                    <input value="1" id="color_mode" name="color_mode" type="checkbox">
+                    <label class="btn-color-mode-switch-inner" data-off="ºC" data-on="ºF" for="color_mode"></label>
+                </label>
+            </div>
             <div class="Flex Status">
                 <section class="Flex LeftSide">
                     <img src="./SolChuvaImgs/Cloud.svg" alt="Ícone Tempo Atual">
@@ -79,6 +89,11 @@
                     </section>
                 </section>
             </div>
+            <section class="WeatherForecast">
+                <h2>Previsão do Tempo</h2>
+                <div id="forecastContainer" class="ForecastContainer">
+                </div>
+            </section>
     </div>
 </body>
 
