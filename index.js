@@ -100,7 +100,9 @@ function updateForecast(dailyForecast) {
 
         forecastElement.innerHTML = `
             <p>${formattedDate}</p>
-            <p class="forecast-temp">${tempMax}${isCelsius ? 'ºC' : 'ºF'} / ${tempMin}${isCelsius ? 'ºC' : 'ºF'}</p>
+            <span class="forecast-temp">${tempMax}${isCelsius ? 'ºC' : 'ºF'}</span>
+            <span>/</span>
+            <span class="forecast-temp">${tempMin}${isCelsius ? 'ºC' : 'ºF'}</span>
             <p>${day.weather[0].description}</p>
         `;
 
