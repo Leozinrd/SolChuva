@@ -27,7 +27,7 @@
 
         img {
             position: absolute;
-            right: 10px;
+            right: 0.625rem;
             top: 50%;
             transform: translateY(-50%);
             padding-right: 0;
