@@ -1,5 +1,8 @@
 let isCelsius = true;
 
+let suaChaveApiGeoCode = 'CHAVE';
+let suaChaveApiOpenWeather = 'CHAVE';
+
 function convertTemperature(value, toCelsius) {
     if (toCelsius) {
         return (value - 32) * 5 / 9; // Fahrenheit para Celsius
@@ -57,7 +60,7 @@ function getUpdateComponents(id, value) {
 }
 
 function getWeather(lat, lon) {
-    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=f3e92ada55e1ce50d221bc184ed88bfb`)
+    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${suaChaveApiOpenWeather}`)
         .then(response => response.json())
         .then(data => {
 
@@ -111,7 +114,7 @@ function updateForecast(dailyForecast) {
     });
 }
 function getLatLong(city) {
-    fetch(`https://geocode.maps.co/search?q=${city}&api_key=6630683e00c08787426813fzr4f09d4`)
+    fetch(`https://geocode.maps.co/search?q=${city}&api_key=${suaChaveApiGeoCode}`)
         .then(response => response.json())
         .then(data => {
 
